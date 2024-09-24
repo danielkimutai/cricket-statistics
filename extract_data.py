@@ -1,5 +1,6 @@
 import requests
 import csv
+from google.cloud import storage
 
 url = "https://cricbuzz-cricket.p.rapidapi.com/stats/v1/rankings/batsmen"
 
@@ -28,6 +29,15 @@ if response.status_code == 200:
                 writer.writerow({field: entry.get(field) for field in field_names})
 
         print (f"Data has been fetched successfully to '{csv_filename}'")
+
+        #upload the csv file to GCS 
+        bucket_name = "cricket_data_korir"
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        destination_blob_name = f'{csv_filename}' #the path to store in GCS 
+
+        blob = bucket.blob(destination_blob_name)
+        blob.upload_from_filename(csv_filename)
     else:
         print("No data available from the API")
 

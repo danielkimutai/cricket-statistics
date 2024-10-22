@@ -23,5 +23,5 @@ dag = DAG('fetch_cricket_stats',
 with dag:
     run_script_task = BashOperator(
         task_id='run_script',
-        bash_command='python3 /home/kokim/projects/cricket-statistics/extract_data.py',  # Explicitly using python3
+        bash_command='python3 /home/airflow/gcs/dags/scripts/extract_data.py',  # Explicitly using python3
     )

@@ -1,9 +1,7 @@
 from googleapiclient.discovery import build
-import base64
-import google.auth
-import os
 
-def hello_pubsub():   
+
+def trigger_df_job(cloud_event,environment):    
  
     service = build('dataflow', 'v1b3')
     project = "lithe-catbird-434312-p9"
@@ -25,5 +23,3 @@ def hello_pubsub():
     request = service.projects().templates().launch(projectId=project,gcsPath=template_path, body=template_body)
     response = request.execute()
     print(response)
-
-hello_pubsub()
